@@ -126,7 +126,7 @@ contract Voting is Ownable {
     }
         
 
-    function tallyVotesDraw() external onlyOwner return (uint[] memory){
+    function tallyVotesDraw() external onlyOwner returns (uint[] memory){
        require(workflowStatus == WorkflowStatus.VotingSessionEnded, "Current status is not voting session ended");
         uint highestCount;
         uint nbWinners;
