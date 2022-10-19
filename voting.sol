@@ -102,7 +102,7 @@ contract Voting is Ownable {
         workflowStatus = WorkflowStatus.ProposalsRegistrationStarted;
         
         Proposal memory proposal;
-        proposal.description = _desc;
+        proposal.description = "GENESIS";
         proposalsArray.push(proposal);
         
         emit WorkflowStatusChange(WorkflowStatus.RegisteringVoters, WorkflowStatus.ProposalsRegistrationStarted);
