@@ -130,6 +130,7 @@ contract Voting is Ownable {
        require(workflowStatus == WorkflowStatus.VotingSessionEnded, "Current status is not voting session ended");
         uint highestCount;
         uint nbWinners;
+        uint temp;
         for (uint i = 0; i < proposalsArray.length; i++) {
             if (proposalsArray[i].voteCount == highestCount) {
                 nbWinners++;
@@ -143,7 +144,8 @@ contract Voting is Ownable {
 
         for (uint h=0; h< proposalsArray.length; h++) {
             if (proposalsArray[h].voteCount == highestCount) {
-                winners.push(h);
+                winners[temp];
+                temp++;
             }
         }
         workflowStatus = WorkflowStatus.VotesTallied;
