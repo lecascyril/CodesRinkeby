@@ -146,6 +146,7 @@ contract Voting is Ownable {
             if (proposalsArray[i].voteCount == highestCount) {
                 winners.push(proposalsArray[i]);
             }
+        }
         workflowStatus = WorkflowStatus.VotesTallied;
         emit WorkflowStatusChange(WorkflowStatus.VotingSessionEnded, WorkflowStatus.VotesTallied);
 
