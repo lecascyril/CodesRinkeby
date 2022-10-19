@@ -142,8 +142,8 @@ contract Voting is Ownable {
         uint[] memory winners = new uint[](nbWinners);
 
         for (uint h=0; h< proposalsArray.length; h++) {
-            if (proposalsArray[i].voteCount == highestCount) {
-                winners.push(i);
+            if (proposalsArray[h].voteCount == highestCount) {
+                winners.push(h);
             }
         }
         workflowStatus = WorkflowStatus.VotesTallied;
