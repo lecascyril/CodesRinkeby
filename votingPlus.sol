@@ -129,7 +129,6 @@ contract Voting is Ownable {
     function tallyVotesDraw() external onlyOwner return (uint[] memory){
        require(workflowStatus == WorkflowStatus.VotingSessionEnded, "Current status is not voting session ended");
         uint highestCount;
-        uint[5]memory winners; // egalite entre 5 personnes max
         uint nbWinners;
         for (uint i = 0; i < proposalsArray.length; i++) {
             if (proposalsArray[i].voteCount == highestCount) {
@@ -144,7 +143,7 @@ contract Voting is Ownable {
 
         for (uint h=0; h< proposalsArray.length; i++) {
             if (proposalsArray[i].voteCount == highestCount) {
-                winners.push(proposalsArray[i]);
+                winners.push(i);
             }
         }
         workflowStatus = WorkflowStatus.VotesTallied;
