@@ -70,7 +70,7 @@ contract("Voting", function (accounts) {
       it("Proposal pass, test on proposal description and getter getOneProposal", async function () {
         await Voting.startProposalsRegistering({from: owner})
         await Voting.addProposal("proposalVoter1", {from: voter1})
-        const ID = 0;
+        const ID = 1;
         let voter1ProposalID = await Voting.getOneProposal(ID , {from: voter1});
         expect(voter1ProposalID.description).to.be.equal("proposalVoter1");
       })
@@ -78,7 +78,7 @@ contract("Voting", function (accounts) {
       it("Proposal pass, test on proposalRegistered event", async function () {
         await Voting.startProposalsRegistering({from: owner})
         let receipt  = await Voting.addProposal("proposalVoter1", {from: voter1})
-        const ID = 0;
+        const ID = 1;
         expectEvent(receipt, "ProposalRegistered", {proposalId: new BN(ID)});
       })
 
