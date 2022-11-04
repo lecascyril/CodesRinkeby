@@ -85,7 +85,7 @@ contract("Voting", function (accounts) {
       it("1 Proposal pass, test on revert getter getOneProposal ID 1", async function () {
         await Voting.startProposalsRegistering({from: owner})
         await Voting.addProposal("proposalVoter1", {from: voter1})
-        const ID = 1;
+        const ID = 2;
         await expectRevert.unspecified( Voting.getOneProposal(ID , {from: voter1}));
       })
 
