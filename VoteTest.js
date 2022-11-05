@@ -131,27 +131,27 @@ contract("Voting", function (accounts) {
         "You're not a voter")
         await expectRevert(Voting.setVote(5, {from: voter1}),
         "Proposal not found")        
-        await Voting.setVote(0, {from: voter1});
-        await expectRevert(Voting.setVote(1, {from: voter1}),
+        await Voting.setVote(1, {from: voter1});
+        await expectRevert(Voting.setVote(2, {from: voter1}),
         "You have already voted")
       })
 
     it("vote pass: Voter 1 vote for proposal 1: Test on event", async function () {
       await Voting.startVotingSession({from: owner})
-      let VoteID = 0;
+      let VoteID = 1;
 
-      let receipt = await Voting.setVote(0, {from: voter1});
+      let receipt = await Voting.setVote(1, {from: voter1});
       expectEvent(receipt,'Voted', {voter: voter1, proposalId: new BN(VoteID)})
     })
 
     it("vote pass: Voter 1 vote for proposal 1: Test on voter attributes", async function () {
       await Voting.startVotingSession({from: owner})
-      let VoteID = 0;
+      let VoteID = 1;
       
       let voter1Objectbefore = await Voting.getVoter(voter1, {from: voter1});
       expect(voter1Objectbefore.hasVoted).to.be.equal(false);
 
-      await Voting.setVote(0, {from: voter1});
+      await Voting.setVote(1, {from: voter1});
       let voter1Object = await Voting.getVoter(voter1, {from: voter1});
 
       expect(voter1Object.hasVoted).to.be.equal(true);
@@ -160,9 +160,9 @@ contract("Voting", function (accounts) {
     
     it("vote pass: Voter 1 vote for proposal 1: Test on proposal attributes", async function () {
       await Voting.startVotingSession({from: owner})
-      let VoteID = 0;
+      let VoteID = 1;
 
-      await Voting.setVote(0, {from: voter1});
+      await Voting.setVote(1, {from: voter1});
       let votedProposalObject = await Voting.getOneProposal(VoteID, {from: voter1});
 
       expect(votedProposalObject.description).to.be.equal("proposal 1");
@@ -172,13 +172,13 @@ contract("Voting", function (accounts) {
     it("multiple vote pass: concat", async function () {
       await Voting.startVotingSession({from: owner})
 
-      let receipt1 = await Voting.setVote(0, {from: voter1});
-      let receipt2 = await Voting.setVote(1, {from: voter2});
-      let receipt3 = await Voting.setVote(1, {from: voter3});
+      let receipt1 = await Voting.setVote(1, {from: voter1});
+      let receipt2 = await Voting.setVote(2, {from: voter2});
+      let receipt3 = await Voting.setVote(2, {from: voter3});
 
-      expectEvent(receipt1,'Voted', {voter: voter1, proposalId: new BN(0)})
-      expectEvent(receipt2,'Voted', {voter: voter2, proposalId: new BN(1)})
-      expectEvent(receipt3,'Voted', {voter: voter3, proposalId: new BN(1)})
+      expectEvent(receipt1,'Voted', {voter: voter1, proposalId: new BN(1)})
+      expectEvent(receipt2,'Voted', {voter: voter2, proposalId: new BN(2)})
+      expectEvent(receipt3,'Voted', {voter: voter3, proposalId: new BN(2)})
 
       /////
 
@@ -187,19 +187,19 @@ contract("Voting", function (accounts) {
       let voter3Object = await Voting.getVoter(voter3, {from: voter1});
 
       expect(voter1Object.hasVoted).to.be.equal(true);
-      expect(new BN(voter1Object.votedProposalId)).to.be.bignumber.equal(new BN(0));
+      expect(new BN(voter1Object.votedProposalId)).to.be.bignumber.equal(new BN(1));
 
       expect(voter2Object.hasVoted).to.be.equal(true);
-      expect(new BN(voter2Object.votedProposalId)).to.be.bignumber.equal(new BN(1));
+      expect(new BN(voter2Object.votedProposalId)).to.be.bignumber.equal(new BN(2));
       
       expect(voter3Object.hasVoted).to.be.equal(true);
-      expect(new BN(voter3Object.votedProposalId)).to.be.bignumber.equal(new BN(1));
+      expect(new BN(voter3Object.votedProposalId)).to.be.bignumber.equal(new BN(2));
 
 
       /////
 
-      let votedProposalObject1 = await Voting.getOneProposal(0, {from: voter1});
-      let votedProposalObject2 = await Voting.getOneProposal(1, {from: voter2});
+      let votedProposalObject1 = await Voting.getOneProposal(1, {from: voter1});
+      let votedProposalObject2 = await Voting.getOneProposal(2, {from: voter2});
 
       expect(votedProposalObject1.voteCount).to.be.equal('1');
       expect(votedProposalObject2.voteCount).to.be.equal('2');
@@ -252,7 +252,7 @@ contract("Voting", function (accounts) {
         await Voting.tallyVotes({from: owner});
         let winningID = await Voting.winningProposalID.call();
         let winningProposal= await Voting.getOneProposal(winningID, {from:voter1});
-        expect(winningProposal.description).to.equal('voter3Proposal');
+        expect(winningProposal.description).to.equal('voter2Proposal');
         expect(winningProposal.voteCount).to.equal('2');
       })
   })
