@@ -1,0 +1,45 @@
+html {
+  font-size: 10px;
+  font-family: sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+.addr{
+  position: fixed;
+  top: 0em;
+  right: 0em;
+}
+
+.bal{
+  margin-top: 40%;
+  text-align: center;
+}
+
+.btns {
+  margin-top: 3em;
+  text-align: center;
+}
+
+.minting{
+  margin-top: 3em;
+}
+
+button{
+  border: 2px solid #9ba3e3 ;
+  border-radius: 10px;
+  padding: 10px;
+  margin-left: 1em;
+}
+
+input{
+  margin-left: 1em;
+}
